@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+backend/venv/
+
+# production
+dist/
+build/
+
+# next.js
+.next/
+
+# misc
+.DS_Store
+
+# local env files
+.env
