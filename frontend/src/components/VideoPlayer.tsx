@@ -10,7 +10,7 @@
 // =====================================
 
 import React, { useState, useEffect } from "react";
-import { handlePlay, handlePause, handleReset, handleRewind, handleForward, toggleMute, handleSetAPoint, handleSetBPoint, handleAddBookmark, handleBookmarkClick, handleProgressClick, formatTime } from './videoUtils';
+import { handlePlay, handlePause, handleReset, handleRewind, handleForward, toggleMute, handleSetAPoint, handleSetBPoint, handleAddBookmark, handleBookmarkClick, formatTime } from './videoUtils';
 
 interface VideoPlayerProps {
   videoSrc: string;
@@ -122,6 +122,37 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef, onTimeUpd
           }} />
         )}
       </div>
+
+      {/* 컨트롤 버튼 그룹 */}
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", marginTop: "10px" }}>
+        <button onClick={() => handlePlay(videoRef)}>▶️ 재생</button>
+        <button onClick={() => handlePause(videoRef)}>⏸️ 일시정지</button>
+        <button onClick={() => handleReset(videoRef)}>⏮️ 처음으로</button>
+        <button onClick={() => handleRewind(videoRef)}>⏪ 3초 뒤로</button>
+        <button onClick={() => handleForward(videoRef)}>⏩ 3초 앞으로</button>
+        <button onClick={() => toggleMute(videoRef)}>🔇 음소거/해제</button>
+        <button onClick={() => handleSetAPoint(videoRef, setAPoint, bPoint, setBPoint)}>A 설정</button>
+        <button onClick={() => handleSetBPoint(videoRef, aPoint, setBPoint)}>B 설정</button>
+        <button onClick={() => handleAddBookmark(videoRef, setBookmarks)}>북마크 추가</button>
+      </div>
+
+      {/* 북마크 리스트 */}
+      {bookmarks.length > 0 && (
+        <div style={{ marginTop: "10px", width: "640px", maxWidth: "100%" }}>
+          <strong>북마크 목록:</strong>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            {bookmarks.map((time, index) => (
+              <li
+                key={index}
+                style={{ cursor: "pointer", color: "blue", textDecoration: "underline", marginBottom: "5px" }}
+                onClick={() => handleBookmarkClick(videoRef, time)}
+              >
+                {formatTime(time)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
